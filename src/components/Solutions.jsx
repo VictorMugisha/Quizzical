@@ -3,7 +3,20 @@ import { decode } from 'html-entities';
 
 const Solutions = (props) => {
   const { askedQuestions, toggleInitial } = props;
-  console.log("At least this rendered");
+
+  // Function to calculate the number of correct answers
+  const calculateScore = () => {
+    return askedQuestions.reduce((score, question) => {
+      const selectedAnswer = question.allAnswers.find(answer => answer.isSelected);
+      if (selectedAnswer && selectedAnswer.isCorrect) {
+        return score + 1;
+      }
+      return score;
+    }, 0);
+  };
+
+  const score = calculateScore();
+
   return (
     <>
       <div className="questions-component">
@@ -24,7 +37,7 @@ const Solutions = (props) => {
                   } else if (isCorrect) {
                     className = 'correct';
                   } else {
-                    className = ''
+                    className = '';
                   }
 
                   return (
@@ -38,7 +51,10 @@ const Solutions = (props) => {
             </div>
           ))}
         </div>
-        <button className="button-component" onClick={toggleInitial}>Play Again</button>
+        <div className="footer">
+          <h2>You got {score}/{askedQuestions.length} marks!</h2>
+          <button className="button-component" onClick={toggleInitial}>Play Again</button>
+        </div>
       </div>
     </>
   );
