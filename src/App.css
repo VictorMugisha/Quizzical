@@ -97,6 +97,10 @@ body {
   font-size: 12px;
 }
 
+.held {
+  background: rgba(0, 0, 255, 0.114);
+}
+
 .question .line {
   width: 100%;
   height: 1px;

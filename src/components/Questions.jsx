@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Solutions from './Solutions'
 import { decode } from 'html-entities'
-
 import getRandomQuestions from "../data.js"
 
 const Questions = (props) => {
-  const [checkAnswers, setCheckAnswers] = useState(true)
-
+  const [checkAnswers, setCheckAnswers] = useState(false);
+  const [questions, setQuestions] = useState(getRealQuestions(5));
 
   function getRandomizedAnswers(question) {
-    const answers = [
-      ...question.incorrect_answers,
-      question.correct_answer
-    ];
+    const answers = [...question.incorrect_answers, question.correct_answer].map(answer => {
+      return {
+        answerTitle: answer,
+        isSelected: false
+      }
+    });
     return shuffleArray(answers);
   }
 
@@ -26,29 +27,62 @@ const Questions = (props) => {
     return shuffledArray;
   }
 
-  const getRealQuestions = (n) => getRandomQuestions(n).map(question => {
-    return {
-      questionTitle: question.question,
-      allAnswers: getRandomizedAnswers(question),
-      correctAnswer: question.correct_answer
-    }
-  })
+  function getRealQuestions(n) {
+    return getRandomQuestions(n).map(question => {
+      return {
+        questionTitle: question.question,
+        allAnswers: getRandomizedAnswers(question),
+        correctAnswer: question.correct_answer
+      }
+    });
+  }
+
+  function handleChooseAnswer(event, question, answer) {
+    event.stopPropagation();
+    setQuestions(prevQuestions => 
+      prevQuestions.map(prevQuestion => {
+        if (prevQuestion.questionTitle === question.questionTitle) {
+          const newAnswers = prevQuestion.allAnswers.map(an => {
+            if (an.answerTitle === answer.answerTitle) {
+              return {
+                ...an,
+                isSelected: !an.isSelected
+              };
+            } else {
+              return an;
+            }
+          });
+          return {
+            ...prevQuestion,
+            allAnswers: newAnswers
+          };
+        } else {
+          return prevQuestion;
+        }
+      })
+    );
+  }
 
   return (
     <>
       {
         checkAnswers ?
+          <Solutions toggleInitial={props.toggleInitial} /> :
           <div className="questions-component">
             <div className="questions-container">
               {
-                getRealQuestions(4).map((question, index) => (
-                  <div className="question" key={index}>
+                questions.map((question, qIndex) => (
+                  <div className="question" key={qIndex}>
                     <h2 className="title">{decode(question.questionTitle)}</h2>
                     <div className="possible-answers">
                       {
-                        question.allAnswers.map((answer, index) => (
-                          <div className="possible-answer" key={index}>
-                            {decode(answer)}
+                        question.allAnswers.map((answer, aIndex) => (
+                          <div
+                            className={`possible-answer ${answer.isSelected ? 'held' : ''}`}
+                            key={aIndex}
+                            onClick={(event) => handleChooseAnswer(event, question, answer)}
+                          >
+                            {decode(answer.answerTitle)}
                           </div>
                         ))
                       }
@@ -57,11 +91,9 @@ const Questions = (props) => {
                   </div>
                 ))
               }
-
             </div>
-            <button className="button-component" onClick={() => setCheckAnswers(false)}>Check Answers</button>
-          </div> :
-          <Solutions toggleInitial={props.toggleInitial} />
+            <button className="button-component" askedQuestions={questions} onClick={() => setCheckAnswers(true)}>Check Answers</button>
+          </div>
       }
     </>
   )
