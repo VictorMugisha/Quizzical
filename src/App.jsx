@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import './App.css'
 import InitialPage from './components/InitialPage'
 import Questions from './components/Questions'
+import './App.css'
 
 export default function App() {
 
   const [initial, setInitial] = useState(true)
 
   function toggleInitial() {
-    setInitial(false)
+    setInitial(prevState => !prevState)
   }
 
   return (
@@ -16,7 +16,7 @@ export default function App() {
       {
         initial ? 
         <InitialPage toggleInitial={toggleInitial} /> :
-        <Questions />
+        <Questions toggleInitial={toggleInitial} />
       }
     </>
   )

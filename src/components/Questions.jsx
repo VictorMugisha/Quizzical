@@ -3,7 +3,7 @@ import Question from './Question'
 import Button from './Button'
 import Solutions from './Solutions'
 
-const Questions = () => {
+const Questions = (props) => {
 
   const [checkAnswers, setCheckAnswers] = useState(true)
 
@@ -24,7 +24,7 @@ const Questions = () => {
           </div>
           <Button text="Check Answers" onClick={showAnswers} />
         </div> :
-        <Solutions />
+        <Solutions toggleInitial={props.toggleInitial} />
       }
     </>
   )

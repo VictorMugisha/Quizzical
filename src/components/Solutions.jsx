@@ -2,12 +2,8 @@ import React from 'react'
 import Question from './Question'
 import Button from './Button'
 
-const Solutions = () => {
+const Solutions = (props) => {
 
-  function handleRestart() {
-
-  }
-  
   return (
     <>
       <div className="questions-component">
@@ -15,7 +11,7 @@ const Solutions = () => {
           <Question />
           <Question />
         </div>
-        <Button text="Play Again" onClick={handleRestart}/>
+        <Button text="Play Again" onClick={props.toggleInitial}/>
       </div>
     </>
   )
