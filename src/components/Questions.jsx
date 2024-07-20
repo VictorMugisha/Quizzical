@@ -1,18 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Question from './Question'
 import Button from './Button'
+import Solutions from './Solutions'
 
 const Questions = () => {
+
+  const [checkAnswers, setCheckAnswers] = useState(true)
+
+  function showAnswers() {
+    setCheckAnswers(false)
+  }
+
   return (
-    <div className="questions-component">
-      <div className="questions-container">
-        <Question />
-        <Question />
-        <Question />
-        <Question />
-      </div>
-      <Button text="Check Answers" />
-    </div>
+    <>
+      {
+        checkAnswers ?
+        <div className="questions-component">
+          <div className="questions-container">
+            <Question />
+            <Question />
+            <Question />
+            <Question />
+          </div>
+          <Button text="Check Answers" onClick={showAnswers} />
+        </div> :
+        <Solutions />
+      }
+    </>
   )
 }
 

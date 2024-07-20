@@ -2,11 +2,6 @@ import React from 'react'
 import Button from './Button'
 
 const InitialPage = (props) => {
-
-    function handleClick() {
-        alert("Button was clicked!")
-    }
-
     return (
         <div className="initial-page">
             <div className="content">
