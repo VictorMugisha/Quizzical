@@ -1,8 +1,11 @@
 import React from 'react'
 import './App.css'
+import InitialPage from './components/InitialPage'
 
 export default function App() {
 
-  return <h1>Hello React</h1>
+  return (
+    <InitialPage />
+  )
 }
 
