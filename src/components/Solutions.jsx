@@ -11,7 +11,13 @@ const Solutions = (props) => {
           <Question />
           <Question />
         </div>
-        <Button text="Play Again" onClick={props.toggleInitial}/>
+        {/* <Button text="Play Again" onClick={props.toggleInitial}/> */}
+        <button
+          className="button-component"
+          onClick={props.toggleInitial}
+        >
+          Play Again
+        </button>
       </div>
     </>
   )
