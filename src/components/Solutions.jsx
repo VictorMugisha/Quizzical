@@ -1,5 +1,6 @@
 import React from 'react';
 import { decode } from 'html-entities';
+import Confetti from 'react-confetti';
 
 const Solutions = (props) => {
   const { askedQuestions, toggleInitial } = props;
@@ -51,6 +52,7 @@ const Solutions = (props) => {
             </div>
           ))}
         </div>
+        {score >= 3 && <Confetti />}
         <div className="footer">
           <h2>You got {score}/{askedQuestions.length} marks!</h2>
           <button className="button-component" onClick={toggleInitial}>Play Again</button>
