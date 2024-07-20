@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Question from './Question'
-import Button from './Button'
 import Solutions from './Solutions'
+import { decode } from 'html-entities'
 
-import questionsData from "../data.js"
+import getRandomQuestions from "../data.js"
 
 const Questions = (props) => {
-
   const [checkAnswers, setCheckAnswers] = useState(true)
 
-  function showAnswers() {
-    setCheckAnswers(false)
-  }
 
   function getRandomizedAnswers(question) {
     const answers = [
@@ -31,10 +26,12 @@ const Questions = (props) => {
     return shuffledArray;
   }
 
-  const questionComponents = questionsData.slice(0, 5).map(question => {
-    const answers = getRandomizedAnswers(question);
-    console.log(answers);
-    return <Question key={question.question} title={question.question} answers={answers} correctAnswer={correctAnswer} />
+  const getRealQuestions = (n) => getRandomQuestions(n).map(question => {
+    return {
+      questionTitle: question.question,
+      allAnswers: getRandomizedAnswers(question),
+      correctAnswer: question.correct_answer
+    }
   })
 
   return (
@@ -43,16 +40,26 @@ const Questions = (props) => {
         checkAnswers ?
           <div className="questions-component">
             <div className="questions-container">
-              kello
-              {/* {questionComponents} */}
+              {
+                getRealQuestions(4).map((question, index) => (
+                  <div className="question" key={index}>
+                    <h2 className="title">{decode(question.questionTitle)}</h2>
+                    <div className="possible-answers">
+                      {
+                        question.allAnswers.map((answer, index) => (
+                          <div className="possible-answer" key={index}>
+                            {decode(answer)}
+                          </div>
+                        ))
+                      }
+                    </div>
+                    <div className="line"></div>
+                  </div>
+                ))
+              }
+
             </div>
-            {/* <Button text="Check Answers" onClick={showAnswers} /> */}
-            <button
-              className="button-component"
-              onClick={showAnswers}
-            >
-              Check Answers
-            </button>
+            <button className="button-component" onClick={() => setCheckAnswers(false)}>Check Answers</button>
           </div> :
           <Solutions toggleInitial={props.toggleInitial} />
       }

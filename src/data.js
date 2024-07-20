@@ -14,7 +14,7 @@ const questions = [
     {
         type: "multiple",
         difficulty: "medium",
-        category: "Entertainment: Musicals & Theatres",
+        category: "Entertainment: Musicals &amp; Theatres",
         question: "Who is the musical director for the award winning musical &quot;Hamilton&quot;?",
         correct_answer: "Alex Lacamoire",
         incorrect_answers: [
@@ -38,7 +38,7 @@ const questions = [
     {
         type: "boolean",
         difficulty: "medium",
-        category: "Science & Nature",
+        category: "Science &amp; Nature",
         question: "Shrimp can swim backwards.",
         correct_answer: "True",
         incorrect_answers: [
@@ -174,7 +174,7 @@ const questions = [
     {
         type: "multiple",
         difficulty: "hard",
-        category: "Entertainment: Cartoon & Animations",
+        category: "Entertainment: Cartoon &amp; Animations",
         question: "What was Maggie Simpson&#039;s first canonical word, not including the Tracey Ullman shorts?",
         correct_answer: "Daddy.",
         incorrect_answers: [
@@ -231,4 +231,19 @@ const questions = [
     }
 ];
 
-export default questions;
+// Fisher-Yates (aka Knuth) Shuffle Algorithm
+function shuffleArray(array) {
+    const shuffledArray = array.slice(); // Create a copy of the array to avoid mutating the original
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+}
+
+
+export default function getRandomQuestions(n) {
+    const shuffledQuestions = shuffleArray(questions);
+    return shuffledQuestions.slice(0, n);
+}
+

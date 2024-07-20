@@ -1,6 +1,4 @@
 import React from 'react'
-import Question from './Question'
-import Button from './Button'
 
 const Solutions = (props) => {
 
@@ -11,13 +9,7 @@ const Solutions = (props) => {
           <Question />
           <Question />
         </div>
-        {/* <Button text="Play Again" onClick={props.toggleInitial}/> */}
-        <button
-          className="button-component"
-          onClick={props.toggleInitial}
-        >
-          Play Again
-        </button>
+        <button className="button-component" onClick={props.toggleInitial}>Play Again</button>
       </div>
     </>
   )
