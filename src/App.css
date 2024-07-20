@@ -45,6 +45,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
 }
 
 .initial-page .content h1 {
