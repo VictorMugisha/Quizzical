@@ -70,7 +70,7 @@ const Questions = (props) => {
   return (
     <>
       {checkAnswers ? (
-        <Solutions questions={questions} toggleInitial={props.toggleInitial} />
+        <Solutions askedQuestions={questions} toggleInitial={props.toggleInitial} />
       ) : (
         <div className="questions-component">
           <div className="questions-container">

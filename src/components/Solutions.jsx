@@ -3,7 +3,7 @@ import { decode } from 'html-entities';
 
 const Solutions = (props) => {
   const { askedQuestions, toggleInitial } = props;
-
+  console.log("At least this rendered");
   return (
     <>
       <div className="questions-component">
@@ -23,6 +23,8 @@ const Solutions = (props) => {
                     className = 'incorrect';
                   } else if (isCorrect) {
                     className = 'correct';
+                  } else {
+                    className = ''
                   }
 
                   return (
